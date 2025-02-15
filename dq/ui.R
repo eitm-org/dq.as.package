@@ -8,20 +8,20 @@
 #
 
 library(shiny)
-
+library(DT)
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(# Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(sidebarPanel(
-    sliderInput(
-      "bins",
-      "Number of bins:",
-      min = 1,
-      max = 50,
-      value = 30
-    )
-  ), # Show a plot of the generated distribution
-  mainPanel(plotOutput("distPlot"))))
+ui <- fluidPage(navbarPage(
+  "DQ: Data Querier",
+  tabPanel(
+    "Connect to D3",
+    sidebarPanel(
+      textInput("uid", "D3 Username:"),
+      passwordInput("password", "Password:"),
+      fileInput("keyfile", "D3 Keyfile"),
+      actionButton("connect", "Connect"),
+      #TODO: insert "successful connection" message
+    ),
+    mainPanel(DT::dataTableOutput(outputId = "test_tab"))
+  )
+))
